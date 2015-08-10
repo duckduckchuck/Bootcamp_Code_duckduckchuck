@@ -10,7 +10,7 @@ void draw() {
     i = 0;
 
   while( i <= width){
-    int j = 100;
+    int j = 0;
     while(j <= height){
       fill(i, 100, 250, 100);
       rect(j, i , 20, 20);
