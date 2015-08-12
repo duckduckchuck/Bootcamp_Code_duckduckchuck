@@ -83,18 +83,18 @@ void draw() {
       healthy = true;
     }
   }
-  if(mentalHealth <= 90){
+  if(mentalHealth <= 10){
     trigger = 1;
     fill(0,0,0);
     rect(0,0,width, height); 
     ouch.pause();
     dead.play();
-    stroke(255);
-      for(int i = 0; i < dead.bufferSize() - 1; i++)
+    //stroke(255);
+    //  for(int i = 0; i < dead.bufferSize() - 1; i++)
   {
-    line(i, 300 + dead.mix.get(i)*100, i+1, 300 + dead.mix.get(i+1)*100);
+//  //  line(i, 300 + dead.mix.get(i)*100, i+1, 300 + dead.mix.get(i+1)*100);
   }
-    //time = 0;
+//    //time = 0;
     //songStarted = true;
   }
   if(count == 0){
