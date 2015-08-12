@@ -3,7 +3,8 @@ Minim minim;
 AudioPlayer ouch;
 AudioPlayer dead;
 
-
+int trigger = 0;
+int count = 140;
 PImage cactus;
 PFont font;
 int mentalHealth;
@@ -23,13 +24,16 @@ void setup() {
   cactus = loadImage("cactus.png");
   font = loadFont("CooperHewitt100.vlw");
   minim = new Minim(this);
-  ouch = minim.loadFile("ouch.wav");
+  ouch = minim.loadFile("ouch.mp3");
   dead = minim.loadFile("dead.wav");
   background(255);
 }
 
 void draw() {
-  time = millis()/1000;
+  if(trigger == 1 && count > -1) {
+  println("die count"+ count);
+  count --;
+  }
   frameRate(10);
   if(healthy == true){
     mentalHealth = 100;
@@ -43,9 +47,13 @@ void draw() {
   background(255);
   imageMode(CENTER);
   image(cactus, width/2, height/2, 300, 412.5);
-  fill(0,200,0, 60);
+  fill(0);
+  textSize(60);
+  
+  text("Please do not", 100, 460);
+  text("touch the cactus.", 70, 530);
   if (mousePressed && distance <= 150) {
-    if (frameCount % 3 == 1){
+    if (frameCount % 10 == 1){
     ouch.play();
     ouch.rewind();
     }
@@ -75,20 +83,27 @@ void draw() {
       healthy = true;
     }
   }
-  if(mentalHealth <= 30){
-    //tired = true;
-    fill(0,100);
-    rect(0, 0, width, height);
+  if(mentalHealth <= 90){
+    trigger = 1;
+    fill(0,0,0);
+    rect(0,0,width, height); 
     ouch.pause();
     dead.play();
-    time = 0;
-    songStarted = true;
+    stroke(255);
+      for(int i = 0; i < dead.bufferSize() - 1; i++)
+  {
+    line(i, 300 + dead.mix.get(i)*100, i+1, 300 + dead.mix.get(i+1)*100);
   }
-  if (songStarted == true){
-    songStartTime = time;
+    //time = 0;
+    //songStarted = true;
+  }
+  if(count == 0){
+    exit();
+  }
+//  //if (songStarted == true){
+    //songStartTime = time;
     //exit();
-  }
-  println(mentalHealth);
+  //println(mentalHealth);
 }
 //void mousePressed(){
 //  pressed = true;
